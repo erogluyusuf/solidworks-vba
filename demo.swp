@@ -25,13 +25,28 @@ Sub main()
     
     swApp.SendMsgToUser "Kapı kanadı oluşturuldu"
     
-    ' --- Kilit Yuvası ---
-    Part.SketchManager.InsertSketch True
-    Part.SketchManager.CreateCenterRectangle 0.38, 0, 0, 0.40, 0.05, 0
-    Part.FeatureManager.FeatureCut3 True, False, False, 0, 0, 0.02, 0, False, False, False, False, _
-    0, 0, False, False, False, False, True, True, True, True, False, 0, 0, False
-    
-    swApp.SendMsgToUser "Kilit yuvası açıldı"
+' --- Kilit Yuvası ---
+Dim swSketch As Sketch
+
+' Yeni skeç başlat
+Part.SketchManager.InsertSketch True
+
+' Dikdörtgen çiz (merkez dikdörtgen)
+Part.SketchManager.CreateCenterRectangle 0.39, 0.025, 0, 0.02, 0.025, 0
+
+' Skeçi bitir
+Part.SketchManager.InsertSketch True
+
+' Extruded Cut (Kesit)
+Dim swFeat As Feature
+Set swFeat = Part.FeatureManager.FeatureCut3(True, False, False, _
+    0, 0, 0.02, 0, _
+    False, False, False, False, _
+    0, 0, _
+    False, False, False, False, _
+    True, True, True, True, _
+    False, 0, 0, False)
+
     
     ' --- Menteşe Yerleri ---
     Part.SketchManager.InsertSketch True
